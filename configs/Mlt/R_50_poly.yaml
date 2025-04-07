@@ -1,0 +1,27 @@
+_BASE_: "../Base.yaml"
+
+DATASETS:
+  TRAIN: ("mlt_poly_train",) 
+  TEST: ("totaltext_poly_test",)
+
+MODEL:
+  WEIGHTS: output/r_50_poly/pretrain_syntext/model_final.pth
+  # "detectron2://ImageNetPretrained/torchvision/R-50.pkl"
+  # output/r_50_poly/pretrain_03/model_0339999.pth
+  # output/r_50_poly/pretrain/model_0039999.pth
+  LABELENCODER:
+    WEIGHT: "/home/mdisk1/zhanggege/Textspotting/UDiffText/checkpoints/encoders/LabelEncoder/epoch=49-step=38050.ckpt"
+
+SOLVER:
+  IMS_PER_BATCH: 8
+  BASE_LR: 1e-4
+  LR_BACKBONE: 1e-5
+  WARMUP_ITERS: 0
+  STEPS: (140000,)
+  MAX_ITER: 200000
+  CHECKPOINT_PERIOD: 20000
+
+TEST:
+  EVAL_PERIOD: 10000
+
+OUTPUT_DIR: "output/r_50_poly/mlt/fintune"
