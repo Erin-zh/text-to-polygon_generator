@@ -1,9 +1,9 @@
 import json
 from shapely.geometry import Polygon
 
-real_json_file = "datasets/CTW1500/annotations/train_poly.json"
-pseudo_annotation_file = "datasets/CTW1500/process_json/rec_split_merged_polys_0.2.json"
-process_train_file = "datasets/pseudo_annotation/process_ctw_train_poly_maxlen100_v2_0.2.json"
+real_json_file = ""
+pseudo_annotation_file = ""
+process_train_file = ""
 
 with open(real_json_file, 'r') as f:
     real_data = json.load(f)
@@ -18,7 +18,6 @@ def calculate_bbox_and_area(polys):
     bbox = [bbox[0], bbox[1], bbox[2] - bbox[0], bbox[3] - bbox[1]]
     return bbox, area
 
-# 将 real_data 中的 annotations 按 id 索引
 real_data_dict = {ann["id"]: ann for ann in real_data["annotations"]}
 
 new_annotations = []
@@ -26,7 +25,6 @@ new_annotations = []
 for pseudo_ann in pseudo_annotations:
     polys = pseudo_ann['polys']
     
-    # 跳过 polys 为空的情况
     if not polys:
         continue
     
@@ -41,7 +39,7 @@ for pseudo_ann in pseudo_annotations:
             "image_id": pseudo_ann["image_id"],
             "bbox": bbox,
             "area": area,
-            "rec": real_ann["rec"],  # 从 real_data 中获取 rec
+            "rec": real_ann["rec"],
             "category_id": pseudo_ann.get("category_id", 1),
             "iscrowd": 0,
             "id": pseudo_ann.get("id", len(new_annotations) + 1),
@@ -51,7 +49,6 @@ for pseudo_ann in pseudo_annotations:
         
         new_annotations.append(new_ann)
 
-# 更新 real_data 的 annotations
 real_data['annotations'] = new_annotations
 
 with open(process_train_file, 'w') as f:
