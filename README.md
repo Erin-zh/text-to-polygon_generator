@@ -16,7 +16,7 @@ pip install torch==1.9.1+cu111 torchvision==0.10.1+cu111 -f https://download.pyt
 pip install opencv-python scipy timm shapely albumentations Polygon3
 python -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu111/torch1.9/index.html
 pip install setuptools==59.5.0
-git clone https://github.com/ymy-k/DPText-DETR.git
-cd DPText-DETR
+git clone https://github.com/Erin-zh/text-to-polygon_generator.git
+cd text-to-polygon_generator
 python setup.py build develop
 ```
