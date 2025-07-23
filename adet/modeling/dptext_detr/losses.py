@@ -58,15 +58,13 @@ def three_focal_loss(inputs, targets, num_inst, alpha: float = 0.25, gamma: floa
                Default = 0.25.
         gamma: Exponent of the modulating factor (1 - p_t) to balance easy vs hard examples.
                Default = 2.
-        num_inst: Number of instances (用于归一化，可按需求使用)
+        num_inst: Number of instances
     Returns:
         Loss tensor (a scalar loss value).
     """
-    # 计算 softmax 概率和 log-softmax 概率
     probs = F.softmax(inputs, dim=1)         # shape: (N, C, ...)
     log_probs = F.log_softmax(inputs, dim=1)   # shape: (N, C, ...)
     
-    # focal loss 公式：loss = -sum_c(alpha * (1 - p_c)^gamma * t_c * log(p_c))
     loss = -alpha * ((1 - probs) ** gamma) * targets * log_probs
     
     if loss.ndim == 4:
