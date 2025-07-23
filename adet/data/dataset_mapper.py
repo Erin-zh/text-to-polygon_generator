@@ -200,7 +200,6 @@ class DatasetMapperWithBasis(DatasetMapper):
             if self.recompute_boxes:
                 instances.gt_boxes = instances.gt_masks.get_bounding_boxes()
             dataset_dict["instances"] = utils.filter_empty_instances(instances)
-        # 记录有效的 annos 索引列表
         valid_indices = []
         for i, anno in enumerate(annos):
             instance = annotations_to_instances([anno], image_shape, mask_format=self.instance_mask_format)
@@ -210,7 +209,6 @@ class DatasetMapperWithBasis(DatasetMapper):
             if len(filtered_instance) > 0:
                 valid_indices.append(i)
 
-        # 现在 dataset_dict["instances"] 中第 j 个实例对应原始 annos 中的 valid_indices[j]
         if "current_annotation" in dataset_dict and len(valid_indices) > 0:
             current_instance_idx = np.random.choice(len(dataset_dict["instances"]))
             original_idx = valid_indices[current_instance_idx]  # 映射到原始 annos 的索引
@@ -224,23 +222,6 @@ class DatasetMapperWithBasis(DatasetMapper):
             dataset_dict["current_instance"] = utils.filter_empty_instances(current_instance)
             dataset_dict['current_instance']._fields['gt_classes'] = torch.tensor([1]) # change current instance label: 0-->1
             dataset_dict["instances"]._fields['gt_classes'][current_instance_idx] = 1
-        # if "current_annotation" in dataset_dict:
-        #     """ current_annotation = dataset_dict.pop("current_annotation") 
-        #     if not self.use_instance_mask:
-        #         current_annotation.pop("segmentation", None)
-        #     if not self.use_keypoint:
-        #         current_annotation.pop("keypoints", None) """
-                
-        #     current_annotation_index = np.random.choice(len(annos))
-        #     current_annos = annos[current_annotation_index]
-        #     current_instance = annotations_to_instances(
-        #         [current_annos], image_shape, mask_format=self.instance_mask_format
-        #     )
-        #     if self.recompute_boxes:
-        #         current_instance.gt_boxes = instances.gt_masks.get_bounding_boxes()
-        #     dataset_dict["current_instance"] = utils.filter_empty_instances(current_instance)
-        #     dataset_dict['current_instance']._fields['gt_classes'] = torch.tensor([1]) # change current instance label: 0-->1
-        #     dataset_dict["instances"]._fields['gt_classes'][current_annotation_index] = 1
         if self.basis_loss_on and self.is_train:
             # load basis supervisions
             if self.ann_set == "coco":
