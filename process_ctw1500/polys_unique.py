@@ -44,13 +44,10 @@ def remove_duplicates_within_image(text_results, iou_threshold=0.7):
     
     return unique_results
 
-# 读取输入文件
 with open('output/r_50_poly/debug/inference/text_results.json', 'r') as file:
     text_results = json.load(file)
 
-# 去重操作
 unique_text_results = remove_duplicates_within_image(text_results)
 
-# 保存去重后的结果
 with open('output/r_50_poly/debug/inference/unique_text_results_0.2.json', 'w') as file:
     json.dump(unique_text_results, file)
