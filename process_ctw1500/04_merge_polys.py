@@ -125,11 +125,10 @@ def generate_combinations(polys, relative_threshold=0.9):
     return best_combination if best_combination else filtered_combinations[0] if filtered_combinations else []
 
 def is_self_intersecting_polygon(points):
-    """使用 shapely 检查多边形是否自交"""
     if len(points) < 3:
-        return True  # 小于三个点无法形成有效多边形
+        return True
     polygon = Polygon(points)
-    return polygon.is_simple  # 如果 is_simple 为 False 则表示多边形自交
+    return polygon.is_simple
 
 def process_annotation(original_id, polys_list, annotations):
     polys_list = [p for p in polys_list if p]
