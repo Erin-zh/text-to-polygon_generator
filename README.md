@@ -2,4 +2,4 @@
 This is the official repo for the paper "A Text-only Weakly Supervised Learning Framework for Text Spotting via Text-to-Polygon Generator".
 
 ## Introduction
-<img src="./text-to-polygon_generator.jpg" alt="image" style="zoom:50%;" />
+<img src="./text-to-polygon_generator.pdf" alt="image" style="zoom:50%;" />
