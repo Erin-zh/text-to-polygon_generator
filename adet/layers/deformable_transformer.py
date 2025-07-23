@@ -406,16 +406,9 @@ class DeformableTransformerDecoderLayer_Det(nn.Module):
         self.norm_inter = nn.LayerNorm(d_model)
 
         # cross attention for the location and the queries
-        # self.attn_cross_loc_query = nn.MultiheadAttention(embed_dim=100, num_heads=4, dropout=dropout)
         self.attn_cross_loc_query = nn.MultiheadAttention(d_model, n_heads, dropout=dropout)
         self.dropout_cross_loc_query = nn.Dropout(dropout)
         self.norm_cross_loc_query = nn.LayerNorm(d_model)
-        # self.query_downsample = nn.Conv1d(
-        #     in_channels=25,
-        #     out_channels=16,
-        #     kernel_size=1,
-        #     stride=1
-        # )
         
         # ffn
         self.linear1 = nn.Linear(d_model, d_ffn)
@@ -508,31 +501,6 @@ class DeformableTransformerDecoderLayer_Det(nn.Module):
             None)[0].transpose(0, 1).reshape(tgt.shape)
         tgt = tgt + self.dropout_cross_loc_query(tgt_query)
         tgt = self.norm_cross_loc_query(tgt)
-        """ tgt_query = self.attn_cross_loc_query(
-            self.with_pos_embed(queries, query_pos_embed).flatten(0, 1).transpose(0, 1),  # [25,200,256] -> q
-            self.with_pos_embed(tgt, query_pos).flatten(0, 1).transpose(0, 1),           # [16,200,256] -> k
-            tgt.flatten(0, 1).transpose(0, 1),                                           # [16,200,256] -> v
-            None)[0]
-        output_pooled = F.adaptive_max_pool1d(tgt_query.permute(1, 2, 0), tgt.size(2)).permute(2, 0, 1).reshape(tgt.shape) """
-        """ tgt_query = self.attn_cross_loc_query(
-            self.with_pos_embed(queries, query_pos_embed).flatten(2, 3).permute(2, 0, 1), #[25x256,B,100] -> q  
-            self.with_pos_embed(tgt, query_pos).flatten(2, 3).permute(2, 0, 1),           #[16x256,B,100] -> K
-            tgt.flatten(2, 3).permute(2, 0, 1),                                           #[16x256,B,100] -> V
-            None)[0].permute(1, 2, 0).reshape(queries.shape)                              #[B,100,25,256] """
-        # with autocast():
-        #     q = self.with_pos_embed(queries, query_pos_embed)
-        #     k = self.with_pos_embed(tgt, query_pos)
-        #     v = tgt
-
-        #     tgt_query = self.attn_cross_loc_query(
-        #         q.flatten(2, 3).permute(2, 0, 1),  # [25x256,B,100] -> q
-        #         k.flatten(2, 3).permute(2, 0, 1),  # [16x256,B,100] -> K
-        #         v.flatten(2, 3).permute(2, 0, 1),  # [16x256,B,100] -> V
-        #         None
-        #     )[0].permute(1, 2, 0).reshape(queries.shape)  # [B,100,25,256]
-        #     tgt_query_reshape = self.query_downsample(tgt_query.flatten(0, 1)).reshape(tgt.shape)  # [B,100,16,256]
-        #     tgt = tgt + self.dropout_cross_loc_query(tgt_query_reshape)
-        #     tgt = self.norm_cross_loc_query(tgt)
 
         # ffn
         tgt = self.forward_ffn(tgt)
