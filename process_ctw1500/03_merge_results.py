@@ -17,8 +17,7 @@ def clear_polys(rec_split):
 
 def replace_polys(rec_split, text_results):
     text_results_dict = defaultdict(list)
-    
-    # 将 text_results 中的 polys 存储为字典，每个 key 对应一个 rec，value 是一个包含所有 polys 的列表
+
     for ann in text_results:
         key = (ann['image_id'], tuple(ann['rec']))
         text_results_dict[key].append(ann['polys'])
@@ -26,7 +25,6 @@ def replace_polys(rec_split, text_results):
     for annotation in rec_split['annotations']:
         key = (annotation['image_id'], tuple(annotation['rec']))
         if key in text_results_dict:
-            # 将所有找到的 polys 列表保留为列表中的列表
             annotation['polys'] = text_results_dict[key]
             # annotation['polys'] = [poly for sublist in polys_lists for poly in sublist]
     
