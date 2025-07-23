@@ -1,7 +1,7 @@
 <h1 align="Center"> A Text-only Weakly Supervised Learning Framework for Text Spotting via Text-to-Polygon Generator </h1> 
 This is the official repo for the paper "A Text-only Weakly Supervised Learning Framework for Text Spotting via Text-to-Polygon Generator".
 
-## Introduction
+## 💡 Introduction
 
 <img src="./text-to-polygon_generator.jpg" alt="image" style="zoom:50%;" />
 
@@ -20,3 +20,5 @@ git clone https://github.com/Erin-zh/text-to-polygon_generator.git
 cd text-to-polygon_generator
 python setup.py build develop
 ```
+- ### Preparing Datasets
+
