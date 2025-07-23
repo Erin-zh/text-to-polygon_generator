@@ -25,7 +25,7 @@ def filter_unique_polys(polys_list):
         if len(polys) == 1:
             unique_polys.append((polys[0], idx))
         else:
-            remaining_polys.append((polys, idx))  # 存储多边形及其索引
+            remaining_polys.append((polys, idx))
     
     return unique_polys, remaining_polys
 
@@ -46,12 +46,12 @@ def select_closest_polys(unique_polys, remaining_polys):
                 best_poly = poly
         
         if best_poly is not None:
-            selected_polys.append((best_poly, polys_idx))  # 存储多边形及其索引
+            selected_polys.append((best_poly, polys_idx))
     
     return selected_polys
 
 def merge_polys(all_polys):
-    all_polys.sort(key=lambda x: x[1])  # 按索引排序
+    all_polys.sort(key=lambda x: x[1])
     
     polys_list = [poly[0] for poly in all_polys if poly[0]]
     if not polys_list:
