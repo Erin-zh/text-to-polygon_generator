@@ -21,4 +21,29 @@ cd text-to-polygon_generator
 python setup.py build develop
 ```
 - ### Preparing Datasets
+We follow the dataset preparation procedure from [TESTR](https://github.com/mlpc-ucsd/TESTR?tab=readme-ov-file#preparing-datasets) to ensure compatibility with the original data format.
+Please download TotalText, CTW1500, and MLT-2017, according to the guide provided by AdelaiDet: [README.md](https://github.com/aim-uofa/AdelaiDet/blob/master/datasets/README.md).
+And ICDAR2015 dataset can be download via [link](https://ucsdcloud-my.sharepoint.com/:u:/g/personal/xiz102_ucsd_edu/EWgEM5BSRjBEua4B_qLrGR0BaombUL8K3d23ldXOb7wUNA?e=7VzH34).
+- ### Models
+You can train from scratch or finetune the model by putting pretrained weights in `weights` folder.
+
+Text-to-Polygon Generator: [syntext_only](https://1drv.ms/u/c/7ba880629a78428d/EfJkETCFo7xPtJRLw_HkdlgB6BLVVZWjVnBNudD2e29PbA?e=xuIDMe), [syntext+mlt](https://1drv.ms/u/c/7ba880629a78428d/EXOvKWxfIphGo_uFqiWpElIBVySvq7PGuPQtJgb_2x41Tg?e=yLbaSe)
+
+chacter-level text encoder: [text_encoder]()
+
+## Training Details
+- ### Training
+To train the text-to-polygon generator, please use the configuration file: `configs/Pretrain/R_50_poly.yaml`.  Make sure to adjust the number of GPUs and batch size according to your situation.
+For example, a single NVIDIA RTX 4090 (24GB) can typically support a batch_size of 3.
+To start training, run:
+```
+python tools/train_net.py --config-file configs/Pretrain/R_50_poly.yaml
+```
+- ### Evaluation
+```
+python tools/train_net.py --config-file ${CONFIG_FILE} --eval-only MODEL.WEIGHTS ${MODEL_PATH}
+```
+
+## Acknowledgement
+Our work is inspired a lot by [DPText-DETR](https://github.com/ymy-k/DPText-DETR?tab=readme-ov-file#installation) and [TESTR](https://github.com/mlpc-ucsd/TESTR). Thanks for their great works!
 
