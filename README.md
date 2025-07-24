@@ -27,7 +27,7 @@ And ICDAR2015 dataset can be download via [link](https://ucsdcloud-my.sharepoint
 - ### Models
 You can train from scratch or finetune the model by putting pretrained weights in `weights` folder.
 
-Text-to-Polygon Generator: [syntext_only](https://1drv.ms/u/c/7ba880629a78428d/EfJkETCFo7xPtJRLw_HkdlgB6BLVVZWjVnBNudD2e29PbA?e=xuIDMe),  [syntext+mlt](https://1drv.ms/u/c/7ba880629a78428d/EXOvKWxfIphGo_uFqiWpElIBVySvq7PGuPQtJgb_2x41Tg?e=yLbaSe)
+Text-to-Polygon Generator: [syntext_only](https://1drv.ms/u/c/7ba880629a78428d/EfJkETCFo7xPtJRLw_HkdlgB6BLVVZWjVnBNudD2e29PbA?e=xuIDMe),  [syntext+mlt](https://1drv.ms/u/c/7ba880629a78428d/ES33DHiM--tMhW9YyFdaY4EBZfJeSVA7TFUnVEZv9o1cdw?e=rKLEjK)
 
 Chacter-level Text Encoder: [text_encoder](https://1drv.ms/u/s!AlK-tsynJvWIgV2W_gd7f2L7HXfR?e=4zeZvZ)
 
